@@ -6,6 +6,7 @@ import re
 import sys
 import os.path
 from os import path
+import eyed3
 
 title = ImageFont.truetype('cambria.ttc', 24)
 fnt = ImageFont.truetype('cambria.ttc', 12)
@@ -18,6 +19,14 @@ file.close()
 if len(sys.argv) > 1:
     new_file = sys.argv[1]
     if path.exists(new_file):
+        au = eyed3.load(new_file)
+        if (au.tag != None):
+            answer = input("This file already has artwork generated, would you like to continue? y/n\n")
+            if answer == "y" or answer == "yes":
+                print("continuing...\n")
+            else:
+                quit()
+        
         for det in details:
             index = "2F Big Bootie Mix #" + det[0:5]
             if index == new_file[4:len(new_file)-4]:
